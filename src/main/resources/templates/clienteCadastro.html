@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cadastro de Usuário</title>
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+</head>
+<body>
+
+	<!-- Header da restaurante -->
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+		<div class="container">
+			<a id="mero" class="navbar-brand h1 mb-0" href="#">Mero Sushi</a>
+			<buttom class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite"> 
+					<span class="navbar-toggler-icon"></span> 
+			</buttom>
+			<div class="collapse navbar-collapse" id="navbarSite">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a class="nav-link" href="#">Pratos</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Pedido</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Cliente</a><li>
+				</ul>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><a class="nav-link" href="#"><span class="fas fa-user">Sign Up</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="#"><span class="fas fa-sign-in-alt">Login</span></a>	</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Carousel de slides para deixar a aplicação mais interativa -->
+	<div id="carouselRest" class="carousel slide" data-ride="carousel">
+
+		<ol class="carousel-indicators">
+			<li data-target="#carouselRest" data-slide-to="0" class="active"></li>
+			<li data-target="#carouselRest" data-slide-to="1"></li>
+			<li data-target="#carouselRest" data-slide-to="2"></li>
+		</ol>
+
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="/img/img1.jpeg" class="img-fluid d-block">
+			</div>
+
+			<div class="carousel-item">
+				<img src="/img/img2.jpeg" class="img-fluid d-block">
+			</div>
+
+			<div class="carousel-item">
+				<img src="/img/img3.jpg" class="img-fluid d-block">
+			</div>
+		</div>
+
+		<a class="carousel-control-prev" href="#carouselRest"
+			data-slide="prev"> <span class="carousel-control-prev-icon"></span>
+			<span class="sr-only">Anterior</span>
+		</a> <a class="carousel-control-next" href="#carouselRest"
+			data-slide="next"> <span class="carousel-control-next-icon"></span>
+			<span class="sr-only">Próximo</span>
+		</a>
+	</div>
+
+	
+	<!-- Cadastro de Usuário -->
+	<div class="faixaForm">
+		<h2>Cadastro de Usuário</h2>
+
+		<form action="/cliente/cadastrarCliente" method="POST" th:object="${cliente}"
+			enctype="multipart/form-data">
+			
+			<!-- Alerta de sucesso de cliente cadastrado -->
+			<div class="alert alert-success" role="alert" th:if="${!#strings.isEmpty(mensagem)}">
+				 <span th:text="${mensagem}"></span>
+			</div>
+			
+			<!-- Alerta de erros e mostra os erros do cliente-->
+			<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+				<div th:each="detailedError : ${#fields.detailedErrors()}" >
+				
+					<span th:text="${detailedError.message}" ></span>
+				</div>
+			</div>
+
+			<input type="hidden" th:field="*{codigo}">
+			 Nome : <input type="text" th:field ="*{nome_cliente}"><br> 
+			 CPF: <input id="cpf" type="text" th:field ="*{cpf_cliente}"><br> 
+			 Data de nascimento: <input id="datanasc" type="text" th:field ="*{data_de_nascimento}"><br> 
+			 Endereço : <input type="text" th:field ="*{endereco_cliente}"><br> 
+			 Email: <input id="email" type="email" th:field ="*{email}"><br>   
+			 Senha : <input type="password" th:field ="*{senha}"><br>  
+			 Imagem: <input type="file" name="imagem"><br> <input
+				type="submit" value="cadastrar">
+		</form>
+	</div>
+	
+	<script src="/js/jquery.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.mask.min.js"></script>
+	<script src="/js/mascaras.js" ></script>
+</body>
+</html>
