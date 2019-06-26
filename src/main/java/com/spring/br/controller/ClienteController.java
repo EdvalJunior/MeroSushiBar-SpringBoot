@@ -30,7 +30,7 @@ public class ClienteController {
 	}
 	
 	@RequestMapping("/cadastrarCliente")
-	public ModelAndView cadastrarPrato(@Validated Cliente cliente, BindingResult result, @RequestParam(value = "imagem") MultipartFile imagem) {
+	public ModelAndView cadastrarCliente(@Validated Cliente cliente, BindingResult result, @RequestParam(value = "imagem") MultipartFile imagem) {
 		ModelAndView mv = new ModelAndView("clienteCadastro");
 		
 		if(result.hasErrors()) {
@@ -65,5 +65,10 @@ public class ClienteController {
 		return mv;
 	}
 	
+	@RequestMapping("/logar")
+	public ModelAndView login() {
+		ModelAndView mv = new ModelAndView("login");
+		return mv;
+	}
 	
 }

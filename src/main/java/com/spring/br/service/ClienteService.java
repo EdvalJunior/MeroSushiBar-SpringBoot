@@ -3,6 +3,8 @@ package com.spring.br.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +19,8 @@ public class ClienteService {
 	private ClienteRepository clr;
 	
 	public void cadastrarCliente(Cliente cliente, MultipartFile imagem) {
+		cliente.setSenha(new BCryptPasswordEncoder().encode(cliente.getSenha()));
+		
 		String caminho = "images/" + cliente.getNome_cliente() + ".png";
 		AulaFileUtils.salvarImagem(caminho, imagem);
 		clr.save(cliente);

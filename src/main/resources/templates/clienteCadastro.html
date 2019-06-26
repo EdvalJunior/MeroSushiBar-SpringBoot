@@ -39,15 +39,15 @@
 
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="/img/img1.jpeg" class="img-fluid d-block">
+				<img src="/img/temaki.jpg" class="img-fluid d-block">
 			</div>
 
 			<div class="carousel-item">
-				<img src="/img/img2.jpeg" class="img-fluid d-block">
+				<img src="/img/lugar.jpg" class="img-fluid d-block">
 			</div>
 
 			<div class="carousel-item">
-				<img src="/img/img3.jpg" class="img-fluid d-block">
+				<img src="/img/2.jpg" class="img-fluid d-block">
 			</div>
 		</div>
 
@@ -86,8 +86,8 @@
 			 CPF: <input id="cpf" type="text" th:field ="*{cpf_cliente}"><br> 
 			 Data de nascimento: <input id="datanasc" type="text" th:field ="*{data_de_nascimento}"><br> 
 			 Endereço : <input type="text" th:field ="*{endereco_cliente}"><br> 
-			 Email: <input id="email" type="email" th:field ="*{email}"><br>   
-			 Senha : <input type="password" th:field ="*{senha}"><br>  
+			 Email: <input name="username" id="email" type="email" th:field ="*{email}"><br>   
+			 Senha : <input name="password" type="password" th:field ="*{senha}"><br>  
 			 Imagem: <input type="file" name="imagem"><br> <input
 				type="submit" value="cadastrar">
 		</form>
@@ -96,6 +96,5 @@
 	<script src="/js/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/jquery.mask.min.js"></script>
-	<script src="/js/mascaras.js" ></script>
 </body>
 </html>

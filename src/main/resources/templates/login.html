@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Cadastro de Usuário</title>
+<title>Login</title>
 <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 </head>
 <body>
 
 	<!-- Header da restaurante -->
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 		<div class="container">
 			<a id="mero" class="navbar-brand h1 mb-0" href="#">Mero Sushi</a>
 			<buttom class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite"> 
@@ -60,41 +60,27 @@
 		</a>
 	</div>
 
+
+
+	<form method="POST">
+		<div class="form-group">
+			<label for="exampleInputEmail1">Endereço de email</label> 
+			<input type="email" name="username" class="form-control" aria-describedby="emailHelp" placeholder="Seu email">
+		</div>
+		<div class="form-group">
+			<label for="exampleInputPassword1">Senha</label> 
+			<input type="password" name="password" class="form-control" placeholder="Senha">
+		</div>
+		<div class="form-group form-check">
+			<input type="checkbox" class="form-check-input" id="exampleCheck1">
+			<label class="form-check-label" for="exampleCheck1">Clique em
+				mim</label>
+		</div>
+		<button type="submit" class="btn btn-primary">Enviar</button>
+	</form>
 	
-	<!-- Cadastro de Usuário -->
-	<div class="faixaForm">
-		<h2>Cadastro de Usuário</h2>
-
-		<form action="/cliente/cadastrarCliente" method="POST" th:object="${cliente}"
-			enctype="multipart/form-data">
-			
-			<!-- Alerta de sucesso de cliente cadastrado -->
-			<div class="alert alert-success" role="alert" th:if="${!#strings.isEmpty(mensagem)}">
-				 <span th:text="${mensagem}"></span>
-			</div>
-			
-			<!-- Alerta de erros e mostra os erros do cliente-->
-			<div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-				<div th:each="detailedError : ${#fields.detailedErrors()}" >
-				
-					<span th:text="${detailedError.message}" ></span>
-				</div>
-			</div>
-
-			<input type="hidden" th:field="*{codigo}">
-			 Nome : <input type="text" th:field ="*{nome_cliente}"><br> 
-			 CPF: <input id="cpf" type="text" th:field ="*{cpf_cliente}"><br> 
-			 Data de nascimento: <input id="datanasc" type="text" th:field ="*{data_de_nascimento}"><br> 
-			 Endereço : <input type="text" th:field ="*{endereco_cliente}"><br> 
-			 Email: <input name="username" id="email" type="email" th:field ="*{email}"><br>   
-			 Senha : <input name="password" type="password" th:field ="*{senha}"><br>  
-			 Imagem: <input type="file" name="imagem"><br> <input
-				type="submit" value="cadastrar">
-		</form>
-	</div>
 	
 	<script src="/js/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
-	<script src="/js/jquery.mask.min.js"></script>
 </body>
 </html>

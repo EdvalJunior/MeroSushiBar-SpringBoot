@@ -1,22 +1,29 @@
 package com.spring.br.models;
 
-import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class Cliente implements Serializable{
+public class Cliente implements UserDetails{
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -45,6 +52,16 @@ public class Cliente implements Serializable{
 	@Column(unique = true)
 	private String email;
 	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable( 
+			name = "clientes_papeis", 
+	        joinColumns = @JoinColumn(
+	          name = "clientes_codigo", referencedColumnName = "codigo"), 
+	        inverseJoinColumns = @JoinColumn(
+	          name = "papel_codigo", referencedColumnName = "papel")) 
+	private List<Papel> papeis;
+	
+	
 	public Cliente() {
 		
 	}
@@ -60,6 +77,47 @@ public class Cliente implements Serializable{
 		this.email = email;
 	}
 
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return (Collection<? extends GrantedAuthority>) this.papeis;
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return this.senha;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	public Long getCodigo() {
 		return codigo;
 	}

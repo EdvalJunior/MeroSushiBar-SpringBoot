@@ -8,4 +8,6 @@ import com.spring.br.models.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
+	 Cliente findByEmail(String email);
+
 }
