@@ -10,19 +10,31 @@
 	<!-- Header da restaurante -->
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 		<div class="container">
-			<a id="mero" class="navbar-brand h1 mb-0" href="#">Mero Sushi</a>
-			<buttom class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite"> 
-					<span class="navbar-toggler-icon"></span> 
-			</buttom>
+			<a id="mero" class="navbar-brand h1 mb-0" href="/">Mero Sushi</a>
+			<buttom class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSite"> <span
+				class="navbar-toggler-icon"></span> </buttom>
 			<div class="collapse navbar-collapse" id="navbarSite">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="#">Pratos</a></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Pratos </a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/prato/formPrato">Cadastrar Prato</a> <a
+								class="dropdown-item" href="/prato/listarprato">Ver todos os Pratos</a>
+							<div class="dropdown-divider"></div>
+						</div>
+					</li>
 					<li class="nav-item"><a class="nav-link" href="#">Pedido</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Cliente</a><li>
+					<li class="nav-item"><a class="nav-link" href="/cliente/formCliente">Cliente</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="#"><span class="fas fa-user">Sign Up</span></a></li>
-					<li class="nav-item"><a class="nav-link" href="#"><span class="fas fa-sign-in-alt">Login</span></a>	</li>
+					<li class="nav-item"><a class="nav-link" href="/logout"> <span
+							class="fas fa-user"></span> Sign Up
+					</a></li>
+					<li class="nav-item"><a class="nav-link" href="/cliente/logar">
+							<span class="fas fa-sign-in-alt"></span> Login
+					</a></li>
 				</ul>
 			</div>
 		</div>

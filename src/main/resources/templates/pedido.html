@@ -3,14 +3,8 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
-<title>Listagem de Pratos</title>
+<title>Pedido</title>
 <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-<!-- Estilização da página de forma manual -->
-<style type="text/css">
-.Container {
-	margin-top: 30px;
-}
-</style>
 </head>
 <body>
 	<!-- Nav bar/Header -->
@@ -79,22 +73,79 @@
 		</a>
 	</div>
 
-	<!-- Cards outra maneira -->
-	<div class="Container" th:each="prato : ${listaPratos}" >
-		<div class="d-flex .flex-row">
-			<div class="card" style="width: 18rem;">
-				<img class="card-img-top" th:src="@{'/images/'+${prato.nome_prato}+.png}"
-					alt="Imagem de capa do card">
-				<div class="card-body">
-					<h5 class="card-title" th:text="${prato.nome_prato}"></h5>
-					<p class="card-text" th:text="${prato.preco_prato}">R$</p>
-					<a sec:authorize="hasRole('ROLE_ADM')" class="btn btn-danger" th:href="@{/prato/excluir/{id}(id = ${prato.id})}">Excluir</a>
-					<a sec:authorize="hasRole('ROLE_ADM')" class="btn btn-warning" th:href="@{/prato/alterar/{id}(id = ${prato.id})}">Alterar</a>
-					<a class="btn btn-primary">Adicionar ao Pedido</a>
+		<main role="main">
+	<div class="container d-flex justify-content-center p-5">
+		<div class="row p-5">
+			<div th:each="pedido : ${pedidos}">
+				<div class="modal fade" th:id="'modal'+${pedido.idPedido}" tabindex="-1"
+					role="dialog" aria-labelledby="classInfo" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content text-center itens-pedido">
+							<h1>Itens do Pedido</h1>
+							<!--Content-->
+							<div class="modal-content">
+								<!--Body-->
+								<div style="max-height: 600px; overflow-y: scroll;"
+									class="modal-body p-3">
+									<table class="table">
+										<thead class="thead-dark table-pedido">
+											<tr>
+												<th scope="col">NOME</th>
+												<th scope="col">QUANTIDADE</th>
+												<th scope="col">TOTAL PREÇO</th>
+												<th scope="col"></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="itens : ${pedido.pedidosM}">
+												<td th:text="*{itens.prato.nome}">Nome</td>
+												<td th:text="*{itens.quantidade}">Quantidade</td>
+												<td
+													th:text="'R$ ' + ${#numbers.formatDecimal(itens.precoTotal, 0, 'COMMA', 2, 'POINT')}">Preço</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+							<!--Footer-->
+							<div class="modal-footer">
+								<a data-dismiss="modal" style="color: white;"
+									class="btn btn-secondary btn-rounded">Fechar</a>
+							</div>
+						</div>
+						<!--/.Content-->
+					</div>
 				</div>
 			</div>
 		</div>
+		<table class="table">
+			<thead class="thead-dark table-pedido">
+				<tr>
+					<th scope="col">ID PEDIDO</th>
+					<th scope="col">DATA PEDIDO</th>
+					<th scope="col">ENDEREÇO</th>
+					<th scope="col">TOTAL PEDIDO</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="pedido : ${pedidos}">
+					<td th:text="${pedido.id}"></td>
+					<td th:text="${pedido.dataPedido}"></td>
+					<td th:text="${pedido.endereco}"></td>
+					<td
+						th:text="'R$' + ${#numbers.formatDecimal(pedido.total, 0, 'COMMA', 2, 'POINT')}"></td>
+					<td><a data-toggle="modal"
+						th:attr="data-target='#modal'+${pedido.id}"
+						class="btn btn-outline-secondary  
+									card-prato-text">Ver
+							Mais</a></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
+	</main>
 
 
 	<script src="/js/jquery.js"></script>

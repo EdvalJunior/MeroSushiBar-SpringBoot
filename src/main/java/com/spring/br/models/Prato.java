@@ -24,7 +24,7 @@ public class Prato implements Serializable{
 	private String nome_prato;
 	
 	@NotNull(message = "Não permitido valor nulo para preço prato")
-	private float preco_prato;
+	private double preco_prato;
 	
 	public Prato() {
 	}
@@ -53,10 +53,10 @@ public class Prato implements Serializable{
 	public void setNome_prato(String nome_prato) {
 		this.nome_prato = nome_prato;
 	}
-	public float getPreco_prato() {
+	public double getPreco_prato() {
 		return preco_prato;
 	}
-	public void setPreco_prato(float preco_prato) {
+	public void setPreco_prato(double preco_prato) {
 		this.preco_prato = preco_prato;
 	}
 }

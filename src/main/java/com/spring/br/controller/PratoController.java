@@ -38,7 +38,7 @@ public class PratoController {
 			return mv;
 		}
 		
-		mv.addObject("mensagem", "Pessoa Cadastrada com sucesso");
+		mv.addObject("mensagem", "Prato Cadastrada com sucesso");
 		ps.cadastrarPrato(prato, imagem);
 		return mv;
 	}

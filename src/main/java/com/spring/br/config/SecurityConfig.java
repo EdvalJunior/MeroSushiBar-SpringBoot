@@ -26,6 +26,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/").permitAll()
 		.antMatchers("/cliente/formCliente").permitAll()
 		.antMatchers("/cliente/cadastrarCliente").permitAll()
+		.antMatchers("/prato/listarPrato").hasRole("USER")
+		.antMatchers("/prato/formPrato").hasRole("ADM")
+		.antMatchers("/prato/salvarPrato").hasRole("ADM")
+		.antMatchers("/prato//excluir/{id}").hasRole("ADM")
+		.antMatchers("/prato//alterar/{id}").hasRole("ADM")
+		
 		//QUando implementar a parte de pratos colocar
 		
 		.anyRequest().authenticated()
@@ -37,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		.and()
 		.logout()
-		.logoutSuccessUrl("/cliente/logar?logout")
+		.logoutSuccessUrl("/cliente/logout")
 		.permitAll();
 		
 		super.configure(http);

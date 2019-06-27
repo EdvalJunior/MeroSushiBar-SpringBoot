@@ -38,4 +38,13 @@ public class ClienteService {
 		return clr.getOne(codigo);
 	}
 	
+	public Cliente buscaPorLogin(String username) {
+		Cliente cliente = clr.findByEmail(username);
+
+		if (cliente == null)
+			return null;
+
+		return cliente;
+	}
+	
 }

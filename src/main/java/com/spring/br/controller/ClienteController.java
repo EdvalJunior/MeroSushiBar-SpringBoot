@@ -71,4 +71,11 @@ public class ClienteController {
 		return mv;
 	}
 	
+	@RequestMapping("/logout")
+	public ModelAndView logout() {
+		ModelAndView mv = new ModelAndView("login");
+		return mv;
+	}
+	
+	
 }
