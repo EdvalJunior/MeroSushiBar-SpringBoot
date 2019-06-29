@@ -118,6 +118,16 @@ public class Cliente implements UserDetails{
 		return false;
 	}
 	
+	
+	
+	public List<Papel> getPapeis() {
+		return papeis;
+	}
+
+	public void setPapeis(List<Papel> papeis) {
+		this.papeis = papeis;
+	}
+
 	public Long getCodigo() {
 		return codigo;
 	}

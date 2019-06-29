@@ -28,21 +28,22 @@
 						role="button" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="false"> Pratos </a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="/prato/formPrato">Cadastrar
-								Prato</a> <a class="dropdown-item" href="/prato/listarPratos">Ver
-								todos os Pratos</a>
+							<a sec:authorize="hasRole('ROLE_ADM')" class="dropdown-item"
+								href="/prato/formPrato">Cadastrar Prato</a> <a
+								class="dropdown-item" href="/prato/listarPratos">Ver todos
+								os Pratos</a>
 							<div class="dropdown-divider"></div>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="">Pedido</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/cliente/formCliente">Cliente</a></li>
+						href="/cliente/formCliente">Cadastrar Cliente</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="/logout"> <span
-							class="fas fa-user"></span> Sign Up
-					</a></li>
 					<li class="nav-item"><a class="nav-link" href="/cliente/logar">
 							<span class="fas fa-sign-in-alt"></span> Login
+					</a></li>
+					<li class="nav-item"><a class="nav-link" href="/logout"> <span
+							class="fas fa-user"></span> Logout
 					</a></li>
 				</ul>
 			</div>
@@ -79,7 +80,6 @@
 			<span class="sr-only">Próximo</span>
 		</a>
 	</div>
-
 
 
 	<script src="/js/jquery.js"></script>

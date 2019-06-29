@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>Listagem de Pratos</title>
 <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 <!-- Estilização da página de forma manual -->
 <style type="text/css">
-#tableListar {
+.Container {
 	margin-top: 30px;
 }
 </style>
@@ -16,86 +17,88 @@
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 		<div class="container">
 			<a id="mero" class="navbar-brand h1 mb-0" href="#">Mero Sushi</a>
-			<buttom class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite"> <span
-				class="navbar-toggler-icon"></span> 
-			</buttom>
+			<buttom class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#navbarSite"> <span
+				class="navbar-toggler-icon"></span> </buttom>
 			<div class="collapse navbar-collapse" id="navbarSite">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="#">Pratos</a></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+						role="button" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"> Pratos </a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="/prato/formPrato">Cadastrar
+								Prato</a> <a class="dropdown-item" href="/prato/listarPratos">Ver
+								todos os Pratos</a>
+							<div class="dropdown-divider"></div>
+						</div></li>
 					<li class="nav-item"><a class="nav-link" href="#">Pedido</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Cliente</a>
-					</li>
+					<li class="nav-item"><a class="nav-link"
+						href="/cliente/formCliente">Cadastrar Cliente</a></li>
 				</ul>
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="#"> <span
-							class="fas fa-user"></span> Sign Up
+					<li class="nav-item"><a class="nav-link" href="/cliente/logar">
+							<span class="fas fa-sign-in-alt"></span> Login
 					</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"> <span
-							class="fas fa-sign-in-alt"></span> Login
+					<li class="nav-item"><a class="nav-link" href="/logout"> <span
+							class="fas fa-user"></span> Logout
 					</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
-	<!-- Carousel do restaurante -->
-	<div id="carouselRest" class="carousel slide" data-ride="carousel">
 
-		<ol class="carousel-indicators">
-			<li data-target="#carouselRest" data-slide-to="0" class="active"></li>
-			<li data-target="#carouselRest" data-slide-to="1"></li>
-			<li data-target="#carouselRest" data-slide-to="2"></li>
-		</ol>
-
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img src="/img/temaki.jpg" class="img-fluid d-block">
-			</div>
-
-			<div class="carousel-item">
-				<img src="/img/lugar.jpg" class="img-fluid d-block">
-			</div>
-
-			<div class="carousel-item">
-				<img src="/img/2.jpg" class="img-fluid d-block">
+	<!-- Cards outra maneira -->
+	<div class="Container" th:each="prato : ${listaPratos}">
+		<div class="card" style="width: 18rem;">
+			<img class="card-img-top"
+				th:src="@{'/images/'+${prato.nome_prato}+.png}"
+				alt="Imagem de capa do card">
+			<div class="card-body">
+				<h5 class="card-title" th:text="${prato.nome_prato}"></h5>
+				<p class="card-text" th:text="${prato.preco_prato}">R$</p>
+				<a sec:authorize="hasRole('ROLE_ADM')" class="btn btn-danger"
+					th:href="@{/prato/excluir/{id}(id = ${prato.id})}">Excluir</a> <a
+					sec:authorize="hasRole('ROLE_ADM')" class="btn btn-warning"
+					th:href="@{/prato/alterar/{id}(id = ${prato.id})}">Alterar</a> <a
+					class="btn btn-primary"
+					th:href="'/pedido/adicionar/carrinho/' + ${prato.id} + '/1'">Adicionar
+					ao Pedido</a>
 			</div>
 		</div>
-
-		<a class="carousel-control-prev" href="#carouselRest"
-			data-slide="prev"> <span class="carousel-control-prev-icon"></span>
-			<span class="sr-only">Anterior</span>
-		</a> <a class="carousel-control-next" href="#carouselRest"
-			data-slide="next"> <span class="carousel-control-next-icon"></span>
-			<span class="sr-only">Próximo</span>
-		</a>
 	</div>
 
-	<!-- Tabela que gera a lista de pratos já cadastrados-->
-	<table id="tableListar" class="table">
-		<thead class="thead-light">
-			<tr>
-				<th scope="col">ID</th>
-				<th scope="col">Código</th>
-				<th scope="col">Nome do Prato</th>
-				<th scope="col">Preço</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="prato : ${listaPratos}">
-				<td th:text="${prato.id}"></td>
-				<td th:text="${prato.cod_prato}"></td>
-				<td th:text="${prato.nome_prato}"></td>
-				<td th:text="${prato.preco_prato}"></td>
-				<td><a class="btn btn-danger"
-					th:href="@{/prato/excluir/{id}(id = ${prato.id})}">Excluir</a></td>
-				<td><a class="btn btn-warning" th:href="@{/prato/alterar/{id}(id = ${prato.id})}"> Alterar </a></td>
-				<td> <img width="200" height="200" alt="" th:src="@{'/images/'+${prato.nome_prato}+.png}"/> </td>
-			</tr>
-		</tbody>
-	</table>
+	<!-- Adicionando Prato -->
+	<main role="main">
+
+		<table class="table">
+			<thead class="thead-dark table-pedido">
+				<tr>
+					<th scope="col">ID PEDIDO</th>
+					<th scope="col">DATA PEDIDO</th>
+					<th scope="col">TOTAL PEDIDO</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="pedidomanager, iterStat: ${pedidosM}">
+					<td th:text="${pedidomanager.prato.nome_prato}"></td>
+					<td th:text="${pedidomanager.quantidade}"></td>
+					<td th:text="'R$ ' + ${#numbers.formatDecimal(pedidomanager.precoTotal, 0, 
+						'COMMA', 2, 'POINT')}">Preço</td>
+					<td><a class="btn btn-danger fa fa-trash" th:href="@{/pedido/remover/carrinho/{id}(id=${iterStat.index})}">
+					Excluir</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="col-12 lista-pratos-botao">
+			<a class="col-12 btn confirmar-pedido" th:href="'/pedido/realizarPedido'">Confirmar Pedido</a>
+		</div>
+	</main>
 
 
-	<script src="/js/jquery.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.js"></script> <script
+		src="/js/bootstrap.min.js"></script>
 </body>
 </html>

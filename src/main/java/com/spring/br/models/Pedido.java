@@ -25,6 +25,9 @@ public class Pedido {
 		@GeneratedValue(strategy = GenerationType.AUTO)
 		private Long idPedido;
 		
+		@NotNull
+		private String Endereco;
+		
 		@ManyToOne
 		@JoinColumn(name = "codPessoa", referencedColumnName = "codigo")
 		private Cliente cliente;
@@ -41,8 +44,18 @@ public class Pedido {
 		
 		// GETTERS AND SETTERS
 
+		
+		
 		public Long getIdPedido() {
 			return idPedido;
+		}
+
+		public String getEndereco() {
+			return Endereco;
+		}
+
+		public void setEndereco(String endereco) {
+			Endereco = endereco;
 		}
 
 		public void setIdPedido(Long idPedido) {

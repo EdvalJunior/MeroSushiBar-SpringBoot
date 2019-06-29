@@ -48,19 +48,20 @@ public class PedidoController {
 		return "pedido";
 	}
 	
-	@RequestMapping("/adicionar/carrinho/{codigo}/{quantidade}")
-	public ModelAndView addItemCarrinho(@PathVariable Long codigo, @PathVariable Long quantidade,RedirectAttributes redir) {
+	@RequestMapping("/adicionar/carrinho/{id}/{quantidade}")
+	public ModelAndView addItemCarrinho(@PathVariable Long id, @PathVariable Long quantidade,RedirectAttributes redir) {
 		PedidoManager item = new PedidoManager();
-		Prato prato = pratoService.buscarPrato(codigo);
+		Prato prato = pratoService.buscarPrato(id);
 
 		item.setPrato(prato);
 		item.setQuantidade(quantidade);
 		item.setPrecoTotal(prato.getPreco_prato() * quantidade);
 		carrinho.addItem(item);
 
-		ModelAndView mv = new ModelAndView("redirect:/");
+		ModelAndView mv = new ModelAndView("redirect:/prato/listarPratos");
 
-		redir.addFlashAttribute("listaItems", carrinho.getItens());
+		redir.addFlashAttribute("pedidosM", carrinho.getItens());
+		System.out.println("size:"+ carrinho.getItens().size());
 
 		return mv;
 	}
@@ -70,15 +71,15 @@ public class PedidoController {
 
 		carrinho.deleteItem(codigo);
 
-		ModelAndView mv = new ModelAndView("redirect:/");
+		ModelAndView mv = new ModelAndView("redirect:/prato/listarPratos");
 
 		redir.addFlashAttribute("listaItems", carrinho.getItens());
 
 		return mv;
 	}
 
-	@RequestMapping("/realizarPedido/{endereco}")
-	public ModelAndView salvarPedido(@PathVariable String idPessoa) throws Exception {
+	@RequestMapping("/realizarPedido")
+	public ModelAndView salvarPedido() throws Exception {
 		Object auth = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDetails user = (UserDetails) auth;
 		Cliente cliente = clienteService.buscaPorLogin(user.getUsername());
@@ -89,10 +90,7 @@ public class PedidoController {
 		pedido.setTotalPedido(carrinho.getTotal());
 		pedido.setDataPedido(new Date());
 		
-		if( cliente.getCodigo() == null)
-			throw new Exception("Cliente não encontrado!");
-		else
-			pedido.getCliente().setEndereco_cliente(cliente.getEndereco_cliente());
+		pedido.setEndereco(cliente.getEndereco_cliente());
 
 		ModelAndView mv = new ModelAndView("redirect:/");
 
@@ -112,7 +110,7 @@ public class PedidoController {
 		UserDetails userd = (UserDetails) auth;
 		Cliente cliente= clienteService.buscaPorLogin(userd.getUsername()); 
 
-		ModelAndView mv = new ModelAndView("pedidos");
+		ModelAndView mv = new ModelAndView("pratoListar");
 
 		List<Pedido> pedidos= pedidoService.listarPedidosPessoa(cliente.getCodigo());
 
@@ -123,7 +121,7 @@ public class PedidoController {
 
 		mv.addObject("pedidos", pedidos);
 		return mv;
-}
+	}
 	
 	
 }
